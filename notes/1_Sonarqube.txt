@@ -1,0 +1,46 @@
+*****************************************************************************************************************
+******************************************SonarQube**************************************************************
+
+STEUP:
+
+required 4gb ram and 2 cpus
+dependency: java11 or 17
+req: t2.medium
+port: 9000
+
+#Launch an t2.medium instance with allow port 9000 
+
+amazon-linux-extras install java-openjdk11 -y   #if amzon linux 2
+sudo dnf install java-11-amazon-corretto  # if amazon linux 2023
+cd /opt/ #switch to opt directory
+sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.9.6.50800.zip
+sudo unzip sonarqube-8.9.6.50800.zip
+
+# sonarqube has to run with user only 
+sudo useradd sonar
+sudo chown sonar:sonar sonarqube-8.9.6.50800 -R
+sudo chmod 777 sonarqube-8.9.6.50800 -R
+
+passwd sonar (create password)
+su - sonar (log in as sonar)
+
+#run this on server manually
+sh /opt/sonarqube-8.9.6.50800/bin/linux-x86-64/sonar.sh start
+sh /opt/sonarqube-8.9.6.50800/bin/linux-x86-64/sonar.sh status
+ 
+to start ----- sh sonar.sh start or ./sonar.sh start
+to check status ----- sh sonar.sh status
+
+#to access 
+public-ip:9000
+user=admin & password=admin
+
+note : after login we need to give our custom password 
+---------------------------------------------------------------------
+
+
+
+sonarQube on Docker 
+
+docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
+--------------------------------------------------------------------
